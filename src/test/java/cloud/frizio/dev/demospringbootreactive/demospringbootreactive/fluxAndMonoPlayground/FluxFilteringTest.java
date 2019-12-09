@@ -12,7 +12,7 @@ import reactor.test.StepVerifier;
  * FluxFiltering
  */
 
-public class FluxFiltering {
+public class FluxFilteringTest {
 
   List<String> namesList = Arrays.asList("Al", "Bob", "Carl", "Dan", "Carol", "Carter");
 
