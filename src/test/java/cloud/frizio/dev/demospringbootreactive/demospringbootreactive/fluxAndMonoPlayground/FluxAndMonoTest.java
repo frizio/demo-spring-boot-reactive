@@ -3,6 +3,7 @@ package cloud.frizio.dev.demospringbootreactive.demospringbootreactive.fluxAndMo
 import org.junit.jupiter.api.Test;
 
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
 public class FluxAndMonoTest {
@@ -59,5 +60,16 @@ public class FluxAndMonoTest {
       .verifyComplete()
     ;
   }
+
+  @Test
+  public void MonoStreamWithoutError() {
+    Mono<String> stringFlux = Mono.just("Spring")
+      .log();
+    StepVerifier.create(stringFlux)
+      .expectNext("Spring")
+      .verifyComplete()     // also perform subscription
+    ;
+  }
+
 
 }
