@@ -9,6 +9,30 @@ import reactor.test.StepVerifier;
 public class FluxAndMonoTest {
 
   @Test
+  public void helloMono() {
+    // Mono.just("Project").map(s -> s.concat(" Reactor")).subscribe(System.out::println);
+    Mono<String> stringFlux = Mono.just("Project")
+                                    .map(s -> s.concat(" Flux"));
+    stringFlux.subscribe(
+      System.out::println,
+      (error) -> System.err.println(error),
+      () -> System.out.println("Stream completed!!!!!!")
+    );
+  }
+
+
+  @Test
+  public void helloFlux() {
+    Flux<String> stringFlux = Flux.just("Spring", "Spring Boot", "Reactive Spring")
+                                    .map(s -> s.concat(" Flux"));
+    stringFlux.subscribe(
+      System.out::println,
+      (error) -> System.err.println(error),
+      () -> System.out.println("Stream completed!!!!!!")
+    );
+  }
+
+  @Test
   public void fluxTest() {
     
     Flux<String> stringFlux = Flux.just("Spring", "Spring Boot", "Reactive Spring")
@@ -24,7 +48,7 @@ public class FluxAndMonoTest {
       () -> System.out.println("Stream completed!!!!!!")
     );
 
-    }
+  }
 
   @Test
   public void FluxStreamWithoutError() {
