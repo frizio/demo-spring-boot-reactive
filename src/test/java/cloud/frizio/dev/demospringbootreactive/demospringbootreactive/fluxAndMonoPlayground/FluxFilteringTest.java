@@ -14,7 +14,7 @@ import reactor.test.StepVerifier;
 
 public class FluxFilteringTest {
 
-  List<String> namesList = Arrays.asList("Al", "Bob", "Carl", "Dan", "Carol", "Carter");
+  List<String> namesList = Arrays.asList("Al", "Bob", "Carl", "Dan", "Carol", "Carter", "Charlie");
 
   @Test
   public void fluxWithFilter() {
