@@ -97,5 +97,13 @@ public class FluxAndMonoTest {
     ;
   }
 
+  @Test
+  public void MonoStreamWithError() {
+    StepVerifier.create( Mono.error(new StackOverflowError("Exception occour")).log() )
+      .expectError(StackOverflowError.class)
+      .verify();
+  }
+
+
 
 }
