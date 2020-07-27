@@ -12,15 +12,15 @@ import reactor.test.StepVerifier;
 
 public class FluxAndMonoFactoryTest {
 
-  List<String> namesList = Arrays.asList("Al", "Bob", "Carl", "Dan");
+  List<String> namesList = Arrays.asList("Al", "Bob", "Carl", "Dan", "Ed");
   
-  String[] namesArray = new String[] {"Al", "Bob", "Carl", "Dan"};
+  String[] namesArray = new String[] {"Al", "Bob", "Carl", "Dan", "Ed"};
 
   @Test
   public void fluxWithIterable() {
-    Flux<String> namesFlux = Flux.fromIterable(this.namesList);
+    Flux<String> namesFlux = Flux.fromIterable(this.namesList).log();
     StepVerifier.create(namesFlux.log())
-      .expectNext("Al", "Bob", "Carl", "Dan")
+      .expectNext("Al", "Bob", "Carl", "Dan", "Ed")
       .verifyComplete();
   }
 
@@ -28,15 +28,15 @@ public class FluxAndMonoFactoryTest {
   public void fluxWithArray() {
     Flux<String> namesFlux = Flux.fromArray(this.namesArray);
     StepVerifier.create(namesFlux.log())
-      .expectNext("Al", "Bob", "Carl", "Dan")
+      .expectNext("Al", "Bob", "Carl", "Dan", "Ed")
       .verifyComplete();
   }
 
   @Test
   public void fluxWithStream() {
-    Flux<String> namesFlux = Flux.fromStream(this.namesList.stream());
+    Flux<String> namesFlux = Flux.fromStream(this.namesList.stream()).log();
     StepVerifier.create(namesFlux.log())
-      .expectNext("Al", "Bob", "Carl", "Dan")
+      .expectNext("Al", "Bob", "Carl", "Dan", "Ed")
       .verifyComplete();
   }
 
@@ -58,8 +58,8 @@ public class FluxAndMonoFactoryTest {
 
   @Test
   public void fluxWithRange() {
-    Flux<Integer> integerFlux = Flux.range(1, 5);
-    StepVerifier.create(integerFlux.log())
+    Flux<Integer> integerFlux = Flux.range(1, 5).log();
+    StepVerifier.create(integerFlux)
       .expectNext(1, 2, 3, 4, 5)
       .verifyComplete();
   }
