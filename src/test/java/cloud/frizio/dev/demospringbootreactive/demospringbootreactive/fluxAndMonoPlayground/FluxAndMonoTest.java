@@ -35,10 +35,11 @@ public class FluxAndMonoTest {
   @Test
   public void fluxTest() {
     
-    Flux<String> stringFlux = Flux.just("Spring", "Spring Boot", "Reactive Spring")
-      /*.concatWith(Flux.error(new RuntimeException("Exception occourred"))) */
-      /* .map(s -> s.concat(" Flux")) */
-      .concatWith(Flux.just("After error"))
+    Flux<String> stringFlux = Flux.just("Spring", "Spring Boot")
+      .concatWith(Flux.just("Reactive Spring"))
+      /* .concatWith(Flux.error(new RuntimeException("Exception occourred"))) */
+      /* .concatWith(Flux.just("After error")) */
+      .map(s -> s.concat(" Flux"))
       .log()
       ;
     
