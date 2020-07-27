@@ -6,6 +6,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 import reactor.core.publisher.Flux;
+import reactor.core.scheduler.Schedulers;
 import reactor.test.StepVerifier;
 
 public class FluxAndMonoTransformingTest {
@@ -52,11 +53,29 @@ public class FluxAndMonoTransformingTest {
   }
   
   @Test
-  public void transformUsingFlaMap_usingParallel() {
+  public void transformUsingFlatMap_usingParallel() {
     List<String> letters = Arrays.asList("A","B","C","D","E","F");
     Flux<String> stringFlux = Flux.fromIterable(letters)
-      //.window(2)
+      .window(2)
+      .flatMap( s -> s.map(this::convertToList).subscribeOn(Schedulers.parallel()))
+      .flatMap(s -> Flux.fromIterable(s))
       .log();
+
+      StepVerifier
+        .create(stringFlux)
+        .expectNextCount(12)
+        .verifyComplete();
+  }
+
+  @Test
+  public void transformUsingFlatMap_usingParallelMaintainOrder() {
+    List<String> letters = Arrays.asList("A","B","C","D","E","F");
+    Flux<String> stringFlux = Flux.fromIterable(letters)
+      .window(2)
+      .flatMapSequential( s -> s.map(this::convertToList).subscribeOn(Schedulers.parallel()))
+      .flatMap(s -> Flux.fromIterable(s))
+      .log();
+
       StepVerifier
         .create(stringFlux)
         .expectNextCount(12)
