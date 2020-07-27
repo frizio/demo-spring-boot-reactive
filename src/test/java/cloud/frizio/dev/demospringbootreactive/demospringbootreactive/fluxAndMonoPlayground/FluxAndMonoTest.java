@@ -53,7 +53,8 @@ public class FluxAndMonoTest {
 
   @Test
   public void FluxStreamWithoutError() {
-    Flux<String> stringFlux = Flux.just("Spring", "Spring Boot", "Reactive Spring")
+    Flux<String> stringFlux = Flux.just("Spring", "Spring Boot")
+      .concatWith(Flux.just("Reactive Spring"))
       .log();
     StepVerifier.create(stringFlux)
       .expectNext("Spring")
@@ -70,15 +71,15 @@ public class FluxAndMonoTest {
       .log();
     StepVerifier.create(stringFlux)
       .expectNext("Spring", "Spring Boot", "Reactive Spring")
-      .expectError(RuntimeException.class)
-      //.expectErrorMessage("Exception occourred")
+      //.expectError(RuntimeException.class)
+      .expectErrorMessage("Exception occourred")
       .verify()
     ;
   }
 
   @Test
   public void FluxStreamElementCount() {
-    Flux<String> stringFlux = Flux.just("Spring", "Spring Boot", "Reactive Spring")
+    Flux<String> stringFlux = Flux.just("Spring Framework", "Spring Boot", "Reactive Spring")
       .log();
     StepVerifier.create(stringFlux)
       .expectNextCount(3)
