@@ -35,7 +35,7 @@ public class FluxAndMonoTransformingTest {
   }
 
   @Test
-  public void transformUsingFlaMap() {
+  public void transformUsingFlatMap() {
     List<String> letters = Arrays.asList("A","B","C","D","E","F");
     Flux<String> stringFlux = Flux.fromIterable(letters)
       .flatMap(
@@ -63,13 +63,14 @@ public class FluxAndMonoTransformingTest {
         .verifyComplete();
   }
 
+
   private List<String> convertToList(String s) {
     try {
       Thread.sleep(1000);
     } catch (InterruptedException e) {
       e.printStackTrace();
     }
-    return Arrays.asList(s, " newValue");
+    return Arrays.asList(s, "newValue");
   }
 
 }
