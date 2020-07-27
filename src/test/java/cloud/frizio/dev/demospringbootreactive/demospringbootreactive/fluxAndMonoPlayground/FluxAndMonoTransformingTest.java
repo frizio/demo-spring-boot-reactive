@@ -26,9 +26,12 @@ public class FluxAndMonoTransformingTest {
 
   @Test
   public void transformUsingMapAndFilter() {
-    Flux<Integer> namesLengthFlux = Flux.fromIterable(this.namesList).filter(s -> s.length() <= 3).map(s -> s.length())
-        .repeat(1);
-    StepVerifier.create(namesLengthFlux.log()).expectNext(2, 3, 3, 2, 3, 3).verifyComplete();
+    Flux<Integer> namesLengthFlux = Flux.fromIterable(this.namesList)
+          .map(s -> s.toUpperCase())
+          .filter(s -> s.length() <= 3).log()
+          .map(s -> s.length())
+          .repeat(1);
+    StepVerifier.create(namesLengthFlux).expectNext(2, 3, 3, 2, 3, 3).verifyComplete();
   }
 
   @Test
